@@ -5,13 +5,27 @@ import (
 	"crypto/elliptic"
 	"crypto/rand"
 	"crypto/sha256"
+	"fmt"
 
 	"github.com/btcsuite/btcd/btcutil/base58"
 	"golang.org/x/crypto/ripemd160"
 )
 
+const (
+	p2pkh = "p2pkh"
+	p2sh  = "p2sh"
+)
+
 var (
-	version            = byte(00)
+	// p2pkh
+	versionP2pkh = byte(00)
+	// // p2sh
+	// versionP2sh = byte(05)
+	// // p2pkh testnet
+	// versionP2pkhTestnet = byte(6f)
+	// // p2sh testnet
+	// versionP2shTestnet = byte(c4)
+
 	addressChecksumLen = 4
 )
 
@@ -33,12 +47,25 @@ func NewWallet() *Wallet {
 }
 
 func (w Wallet) GetAddress() string {
-	// P2PKH address format
-	pubKeyHash := hashPubKey(w.PublicKey)
+	var (
+		versionedPayload = make([]byte, 0)
+		format           string
+	)
 
-	versionedPayload := append([]byte{version}, pubKeyHash...)
+	fmt.Print("输入地址格式(p2pkh,p2sh):")
+	fmt.Scanln(&format)
+
+	switch format {
+	case p2pkh:
+		// P2PKH address format
+		pubKeyHash := hashPubKey(w.PublicKey)
+		versionedPayload = append([]byte{versionP2pkh}, pubKeyHash...)
+	case p2sh:
+	default:
+		panic("unsupported address format")
+	}
+
 	checksum := checksum(versionedPayload)
-
 	fullPayload := append(versionedPayload, checksum...)
 	address := base58.Encode(fullPayload)
 
@@ -67,7 +94,7 @@ func newKeyPair() (ecdsa.PrivateKey, []byte) {
 	curve := elliptic.P256()
 	// get the private ket based on the curve
 	private, _ := ecdsa.GenerateKey(curve, rand.Reader)
-	// uncompressed public key
+	// public key
 	pubKey := append(private.PublicKey.X.Bytes(), private.PublicKey.Y.Bytes()...)
 
 	return *private, pubKey
