@@ -1,6 +1,28 @@
 # Wallet
+## P2PK(pay to public key)
+![alt text](<pictures/image copy 2.png>)
+### ScriptPubKey
+![alt text](<pictures/image copy.png>)
+### ScriptSig
+![alt text](<pictures/image copy 3.png>)
+### Address
+- A P2PK does not have an official address.
 ## P2PKH(pay to public key hash)
+![alt text](<pictures/image copy 4.png>)
+### ScriptPubKey
+![alt text](<pictures/image copy 5.png>)
+### ScriptSig
+![alt text](<pictures/image copy 6.png>)
+### Address
 ![alt text](pictures/image.png)
+![alt text](<pictures/image copy 7.png>)
+- Different versions
+    - p2pkh: 00
+    - p2sh: 05
+    - p2pkh(testnet): 6f
+    - p2sh(testnet): c4
+- Uncompressed address to compressed address
+![alt text](<pictures/image copy 8.png>)
 ## P2WPKH(pay to witness public key hash)
 ### Script
 ![alt text](pictures/image-1.png)
