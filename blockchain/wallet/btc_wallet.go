@@ -23,12 +23,15 @@ type BtcWallet struct {
 	publicKey   *btcec.PublicKey
 }
 
+// non-hd wallet
 func NewBtcWallet(privateKey string, chainId int, segWitType SegWitType) (*BtcWallet, error) {
+	// get chain params by chain id
 	chainParams, err := GetBtcChainParams(chainId)
 	if err != nil {
 		return nil, err
 	}
 
+	// convert WIF private key to WIF instance
 	wif, err := btcutil.DecodeWIF(privateKey)
 	if err != nil {
 		return nil, err
@@ -174,4 +177,8 @@ func (w *BtcWallet) GetKey(addr btcutil.Address) (*btcec.PrivateKey, bool, error
 
 func (w *BtcWallet) GetScript(addr btcutil.Address) ([]byte, error) {
 	return nil, errors.New("GetScript not supported")
+}
+
+func DecodeAddress(addr string, chainParams *chaincfg.Params) (btcutil.Address, error) {
+	return btcutil.DecodeAddress(addr, chainParams)
 }

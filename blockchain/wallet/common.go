@@ -1,6 +1,11 @@
 package wallet
 
-import "github.com/btcsuite/btcd/wire"
+import (
+	"fmt"
+
+	"github.com/btcsuite/btcd/wire"
+	"github.com/ethereum/go-ethereum/params"
+)
 
 type SegWitType int
 
@@ -50,3 +55,39 @@ const (
 	p2pkh = "p2pkh"
 	p2sh  = "p2sh"
 )
+
+var (
+	BscChainConfig          = &params.ChainConfig{}
+	BscTestnetChainConfig   = &params.ChainConfig{}
+	MaticChainConfig        = &params.ChainConfig{}
+	MaticTestnetChainConfig = &params.ChainConfig{}
+)
+
+func GetEthChainParams(chainId int) (*params.ChainConfig, error) {
+	switch chainId {
+	case ChainMainNet:
+		return params.MainnetChainConfig, nil
+	//case ChainRopsten:
+	//	return params.RopstenChainConfig, nil
+	//case ChainRinkeby:
+	//	return params.RinkebyChainConfig, nil
+	case ChainGoerli:
+		return params.GoerliChainConfig, nil
+	case ChainHolesky:
+		return params.HoleskyChainConfig, nil
+	case ChainSepolia:
+		return params.SepoliaChainConfig, nil
+	case ChainMatic:
+		return MaticChainConfig, nil
+	case ChainMaticTestnet:
+		return MaticTestnetChainConfig, nil
+	case ChainBsc:
+		return BscChainConfig, nil
+	case ChainBscTestnet:
+		return BscTestnetChainConfig, nil
+	case ChainPrivate:
+		return params.AllEthashProtocolChanges, nil
+	default:
+		return nil, fmt.Errorf("unknown eth chainId: %d", chainId)
+	}
+}
