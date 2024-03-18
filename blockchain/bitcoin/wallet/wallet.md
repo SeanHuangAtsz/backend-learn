@@ -18,9 +18,12 @@
     - [Execution](#execution)
     - [Address](#address-3)
   - [P2WPKH(pay to witness public key hash)](#p2wpkhpay-to-witness-public-key-hash)
-    - [Script](#script)
+    - [ScriptPubKey](#scriptpubkey-4)
+    - [ScriptPubKey](#scriptpubkey-5)
+    - [Witness field](#witness-field)
     - [Address](#address-4)
   - [P2WSH(pay to witness script hash)](#p2wshpay-to-witness-script-hash)
+    - [Execution](#execution-1)
 ## P2PK(pay to public key)
 ![alt text](<pictures/image copy 2.png>)
 ### ScriptPubKey
@@ -69,17 +72,23 @@
 ### Address
 ![alt text](<pictures/image copy 17.png>)
 ## P2WPKH(pay to witness public key hash)
-### Script
 ![alt text](pictures/image-1.png)
 - It works in the same way as a legacy P2PKH, but it gets unlocked via the Witness field instead of the ScriptSig.
-- Script pubkey
+### ScriptPubKey
 ![alt text](pictures/image-4.png)
-- Witness field
+### ScriptPubKey
+- The ScriptSig must be empty.
+### Witness field
 ![alt text](pictures/image-2.png)
 ![alt text](pictures/image-5.png)
 - Execution
 ![!\[alt text\](image-2.png)](pictures/image-3.png)
 ### Address
 - The address for a P2WPKH locking script is the Bech32 encoding of the ScriptPubKey. The ScriptPubKey for a P2WPKH has the following structure: 0014<20-byte hash160(public key)>
+![alt text](<pictures/image copy 19.png>)
 ![alt text](pictures/image-6.png)
+- In short, the upgrade added a new section to transactions called the Witness, which is used for unlocking the inputs to a transaction (in place of the old ScriptSig field). The reason was so that the TXIDs would no longer be influenced by the signatures inside the transaction data, as these signatures could be adjusted before the transaction gets mined, which in turn would change the TXID (which is annoying).
 ## P2WSH(pay to witness script hash)
+![alt text](<pictures/image copy 20.png>)
+### Execution
+![alt text](<pictures/image copy 21.png>)

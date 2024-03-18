@@ -7,6 +7,6 @@ import (
 )
 
 func main() {
-	w := wallet.NewWallet()
-	fmt.Println(w.GetAddress())
+	w := wallet.NewLegacyWallet()
+	fmt.Println(w.DeriveAddress())
 }

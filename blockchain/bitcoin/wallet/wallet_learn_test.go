@@ -6,7 +6,7 @@ import (
 )
 
 func TestNewWallet(t *testing.T) {
-	w := NewWallet()
-	addr := w.GetAddress()
+	w := NewLegacyWallet()
+	addr := w.DeriveAddress()
 	fmt.Println(addr)
 }
