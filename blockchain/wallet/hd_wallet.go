@@ -61,8 +61,8 @@ func (h *HDWallet) NewWalletByPath(symbol string, path string, segWitType SegWit
 	switch symbol {
 	case SymbolBtc:
 		w, err = NewBtcWalletByPath(path, h.seed, h.btcChainId, segWitType)
-	// case SymbolEth:
-	// 	w, err = NewEthWalletByPath(path, h.seed, h.ethChainId)
+	case SymbolEth:
+		w, err = NewEthWalletByPath(path, h.seed, h.ethChainId)
 	// case SymbolTrx:
 	// 	w, err = NewTrxWalletByPath(path, h.seed)
 	default:
